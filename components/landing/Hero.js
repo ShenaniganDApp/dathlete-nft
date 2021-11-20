@@ -103,13 +103,16 @@ const Heading = styled.h1`
 
 const VideoContainer = styled.div`
   flex: 1;
+  display: flex;
+  justify-content: center;
   @media ${breakpoints.md} {
     width: 100%;
   }
 `;
 
 const VideoAspect = styled.div`
-  aspect-ratio: 16/9;
+  aspect-ratio: 9/16;
+  max-height: 60rem;
 `;
 
 const PlayerFrame = styled(Player)``;
@@ -121,4 +124,5 @@ const Black = styled.div`
   background: black;
   width: 100%;
   height: 100%;
+  text-align: center;
 `;
