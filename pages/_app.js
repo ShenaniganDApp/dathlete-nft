@@ -1,6 +1,7 @@
 import Particles from 'react-tsparticles'
 import '../styles/globals.css'
 
+
 function MyApp({ Component, pageProps }) {
 	return (
 		<>
