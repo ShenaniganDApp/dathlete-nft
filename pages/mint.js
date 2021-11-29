@@ -5,6 +5,9 @@ import styled from 'styled-components';
 import { useDropzone } from 'react-dropzone';
 
 import ERC20 from '/artifacts/contracts/interfaces/IERC20.sol/IERC20.json';
+import dynamic from 'next/dynamic';
+const SelfIdButton = dynamic(() => import('/components/SelfIdButton'), { ssr: false });
+
 
 const initialFormState = {
   title: '',
@@ -20,6 +23,7 @@ export function Mint(props) {
   const [formState, setFormState] = useState(initialFormState);
   const [videoUri, setVideoUri] = useState('');
   const [isIPFSUpload, setIsIPFSUpload] = useState(false);
+
 
   const onDrop = useCallback((acceptedFiles) => {
     const url = URL.createObjectURL(acceptedFiles[0]);
@@ -45,21 +49,9 @@ export function Mint(props) {
     setIsIPFSUpload(true);
   }
 
-  // const onSelfIdConnect = async () => {
-  //   const { provider, address } = web3State;
-  //   const authProvider = new EthereumAuthProvider(provider, address);
-  //   const client = new WebClient({ connectNetwork: 'testnet-clay' });
-  //   const did = await client.authenticate(authProvider, true);
-  //   const SelfId = new SelfID({ client, did });
-  //   try {
-  //     await SelfId.authenticate(authProvider);
-  //     setSelfId(SelfId);
-  //   } catch (err) {
-  //     throw err;
-  //   }
-  // };
   return (
     <Main>
+    <SelfIdButton/> 
       <DropzoneWrapper {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} />
         <p>Drag 'n' drop some files here, or click to select files</p>
