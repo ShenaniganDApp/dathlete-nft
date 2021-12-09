@@ -2,6 +2,8 @@ import { useConnection } from '@self.id/framework'
 
 export default function ConnectButton() {
   const [connection, connect, disconnect] = useConnection()
+  console.log('connection: ', connection);
+
 
   return connection.status === 'connected' ? (
     <button
