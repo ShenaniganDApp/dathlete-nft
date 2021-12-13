@@ -14,6 +14,8 @@ import { Purchase } from '/pages/purchase'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 
 import dynamic from 'next/dynamic';
+const showLanding = false
+const showPurchase = true
 
 const SelfIdProvider = dynamic(() => import('../components/SelfId'), {
   ssr: false,
@@ -220,11 +222,11 @@ export default function Home() {
 }
 
 const Header = styled.div`
-  display: flex;
-  margin-top: 1rem;
-  width: 100%;
-  justify-content: flex-end;
-`;
+	display: flex;
+	padding: 2rem 0;
+	width: 100%;
+	justify-content: flex-end;
+`
 
 const ButtonFrame = styled.button`
   background-color: cadetblue;
