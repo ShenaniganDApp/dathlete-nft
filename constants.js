@@ -7,3 +7,6 @@ export default {
   shopFacetAddress: '0x998abeb3E57409262aE5b751f60747921B33613E',
   prtcleAddress: '0xB5d592f85ab2D955c25720EbE6FF8D4d1E1Be300',
 };
+
+export const IPFS_API_URL = 'https://ipfs.infura.io:5001/api/v0'
+export const IPFS_URL = 'https://ipfs.infura.io/ipfs/'
