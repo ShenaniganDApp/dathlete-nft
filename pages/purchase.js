@@ -1,10 +1,13 @@
 import constants from '/constants';
+import Image from 'next/image';
 import usePoller from '/hooks/usePoller';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { ethers } from 'ethers';
 import { breakpoints } from '../styles';
 import ERC20 from '/artifacts/contracts/interfaces/IERC20.sol/IERC20.json';
+
+import SHE from '/assets/SHE.png';
 
 export const Purchase = (props) => {
   const { web3Provider, address } = props;
@@ -51,6 +54,35 @@ export const Purchase = (props) => {
           </StatsTextFrame>
         </AuctionStats>
       </PurchaseStats>
+
+      <AuctionHeader>
+        <NFTTitle>Title of NFT</NFTTitle>
+        <Text>
+          Description of NFT that will probably need to be smaller and will have
+          more words
+        </Text>
+      </AuctionHeader>
+
+      <Auction>
+        <NFTCards>
+          <Card>
+            <Image src={SHE} height={70} width={70} />
+            <Title>title</Title>
+            <Text>description</Text>
+          </Card>
+          <Card>
+            <Image src={SHE} height={70} width={70} />
+            <Title>title</Title>
+            <Text>description</Text>
+          </Card>
+          <Card>
+            <Image src={SHE} height={70} width={70} />
+            <Title>title</Title>
+            <Text>description</Text>
+          </Card>
+        </NFTCards>
+      </Auction>
+
       <p>{prtcleBalance}</p>
     </div>
   );
@@ -135,4 +167,58 @@ const Auction = styled.section``;
 const Spacer = styled.div`
   height: 100%;
   width: 2rem;
+`;
+
+const Card = styled.div`
+  text-align: center;
+  padding: 4.6rem 1rem;
+  border-radius: 10px;
+  position: relative;
+  z-index: 3;
+  background-color: #1a181a;
+`;
+
+const CardBg = styled.div`
+  flex: 1;
+  margin-right: 2rem;
+  border-radius: 10px;
+  padding: 0.2rem;
+
+  background-image: linear-gradient(
+    to right,
+    #3a343a 50%,
+    #f15025 50%,
+    #ffc115
+  );
+  background-size: 200%;
+  background-position: 0% 50%;
+  transition: all 0.3s;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover {
+    background-position: 100% 50%;
+    transform: scale(1.02);
+  }
+
+  @media ${breakpoints.md} {
+    margin-right: 0;
+    margin-bottom: 2rem;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+`;
+
+const Title = styled.h3`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+`;
+
+const NFTCards = styled.ul`
+  -webkit-column-count: 3;
+  -moz-column-count: 3;
+  column-count: 3;
 `;
