@@ -7,9 +7,19 @@ import { ethers } from 'ethers';
 import { breakpoints } from '../styles';
 import ERC20 from '/artifacts/contracts/interfaces/IERC20.sol/IERC20.json';
 
+import { Button } from '../components/UI';
+
+// import Counter from '/components/UI/Counter';
+
 import SHE from '/assets/SHE.png';
 
-export const Purchase = (props) => {
+const cardData = [{
+  image: SHE,
+  title:"title",
+  description:"description"
+}]
+
+const Purchase = (props) => {
   const { web3Provider, address } = props;
   const { diamondAddress, prtcleAddress } = constants;
   const [prtcleBalance, setPrtcleBalance] = useState('0');
@@ -43,43 +53,49 @@ export const Purchase = (props) => {
         <NFTStats>
           <StatsTextFrame>
             <StatsSubText>NFTs in Auction</StatsSubText>
-            <StatsText>10</StatsText>
+            {/* <Counter number={10} /> */}
           </StatsTextFrame>
         </NFTStats>
         <Spacer />
         <AuctionStats>
           <StatsTextFrame>
             <StatsSubText>Lowest Bid</StatsSubText>
-            <StatsText>10 DAI</StatsText>
+            {/* <Counter number={10} /> */}
+            <StatsText>DAI</StatsText>
           </StatsTextFrame>
         </AuctionStats>
       </PurchaseStats>
 
-      <AuctionHeader>
-        <NFTTitle>Title of NFT</NFTTitle>
-        <Text>
-          Description of NFT that will probably need to be smaller and will have
-          more words
-        </Text>
-      </AuctionHeader>
-
       <Auction>
+        <AuctionHeader>
+        <Image src={SHE} height={70} width={70} />
+          <NFTTitle>Title of NFT</NFTTitle>
+          <Text>
+            Description of NFT that will probably need to be smaller and will
+            have more words
+          </Text>
+        </AuctionHeader>
         <NFTCards>
+        {[...Array(15).keys()].map(()=>(
           <Card>
-            <Image src={SHE} height={70} width={70} />
-            <Title>title</Title>
-            <Text>description</Text>
-          </Card>
-          <Card>
-            <Image src={SHE} height={70} width={70} />
-            <Title>title</Title>
-            <Text>description</Text>
-          </Card>
-          <Card>
-            <Image src={SHE} height={70} width={70} />
-            <Title>title</Title>
-            <Text>description</Text>
-          </Card>
+          
+            
+       
+            
+            <CardContent>
+            <input placeholder={"Enter bid amount"}/>
+
+            <Text>Receive</Text>
+            
+            <Button>Bid</Button>
+          
+            </CardContent>
+            <Title>Minimum Bid: 10 DAI</Title>
+            
+      
+          </Card>))
+          }
+
         </NFTCards>
       </Auction>
 
@@ -87,6 +103,8 @@ export const Purchase = (props) => {
     </div>
   );
 };
+
+export default Purchase;
 
 const Text = styled.p`
   color: whitesmoke;
@@ -162,7 +180,12 @@ const AuctionHeader = styled.div`
   align-items: center;
 `;
 
-const Auction = styled.section``;
+const Auction = styled.section`
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+`;
 
 const Spacer = styled.div`
   height: 100%;
@@ -170,12 +193,20 @@ const Spacer = styled.div`
 `;
 
 const Card = styled.div`
+  display:flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items:center;
   text-align: center;
-  padding: 4.6rem 1rem;
+  padding: 2rem 0;
   border-radius: 10px;
   position: relative;
   z-index: 3;
-  background-color: #1a181a;
+  /* background-color: #1a181a; */
+  backdrop-filter:blur(3px);
+  background-color: rgba(245,245,245,0.1);
+  border: 1px solid whitesmoke;
+  width:100%;
 `;
 
 const CardBg = styled.div`
@@ -218,7 +249,21 @@ const Title = styled.h3`
 `;
 
 const NFTCards = styled.ul`
-  -webkit-column-count: 3;
-  -moz-column-count: 3;
-  column-count: 3;
+  display: flex;
+  width:80%;
+  justify-content:center;
+  align-items:center;
+  flex-wrap: wrap;
+  gap:2rem;
+  & > div {
+    flex-basis: calc(100%);
+  }
 `;
+
+const CardContent = styled.div`
+  display:flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items:center;
+  gap:1rem;
+`
