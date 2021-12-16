@@ -34,7 +34,7 @@ const Cards = () => {
       <Wrapper>
         <Row>
           {data.map(({ image, title, description, url }) => (
-            <CardBg>
+            <CardBg key={title}>
               <a href={url} target="_blank">
                 <Card>
                   <Image src={image} height={70} width={70} />

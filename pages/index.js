@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import { LandingPage } from './landingPage'
-import { Mint } from './mint'
+import { LandingPage } from '/pages/landingPage'
+import { Mint } from '/pages/mint'
 import Web3Modal from 'web3modal'
 import styled from 'styled-components'
 import { providers } from 'ethers'
@@ -10,7 +10,7 @@ import { EthereumAuthProvider } from '@3id/connect'
 // import { WebClient, SelfID } from '@self.id/web';
 import Player from 'react-player'
 import * as IPFS from 'ipfs-http-client'
-import { Purchase } from './purchase'
+import { Purchase } from '/pages/purchase'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 
 const showLanding = true
