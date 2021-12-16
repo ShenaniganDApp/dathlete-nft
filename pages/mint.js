@@ -12,7 +12,7 @@ const SelfIdForm = dynamic(() => import('/components/SelfIdForm'), {
   ssr: false,
 });
 
-export function Mint(props) {
+const Mint = (props) => {
   const { web3Provider, address } = props;
   const { diamondAddress, prtcleAddress } = constants;
   const [selfId, setSelfId] = useState();
@@ -40,7 +40,9 @@ export function Mint(props) {
       </div>
     </Main>
   );
-}
+};
+
+export default Mint;
 
 const Main = styled.main`
   display: flex;
