@@ -26,7 +26,6 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "diamond-util": "^1.1.1",
-    "ethereum-waffle": "^3.3.0",
     "ethers": "^5.4.7",
     "hardhat-contract-sizer": "^2.0.3",
     "hardhat-docgen": "^1.1.2",
@@ -35,7 +34,6 @@
     "solidity-coverage": "^0.7.16",
     "standard": "^14.3.4",
     "truffle-assertions": "^0.9.2",
-    "ts-node": "^10.4.0",
     "typechain": "^6.0.5"
   },
   "dependencies": {
