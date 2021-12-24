@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useViewerRecord } from '@self.id/framework';
 
 const SelfIdForm = ({ videoUrl }) => {
-  const record = useViewerRecord('challengeNFT');
+  // const record = useViewerRecord('challengeNFT');
 
   return (
     <Formik
