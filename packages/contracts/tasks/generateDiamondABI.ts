@@ -13,7 +13,8 @@ task(
   let abi: AbiCoder[] = [];
   for (const file of files) {
     const jsonFile = file.replace("sol", "json");
-    let json = fs.readFileSync(`./artifacts/${basePath}${file}/${jsonFile}`);
+    let json = fs.readFileSync(`./artifacts/contracts/facets/${file}/${jsonFile}`);
+
     json = JSON.parse(json);
     abi.push(...json.abi);
   }
@@ -21,7 +22,7 @@ task(
   for (const file of files) {
     const jsonFile = file.replace("sol", "json");
     let json = fs.readFileSync(
-      `./artifacts/${libraryBasePath}${file}/${jsonFile}`
+      `./artifacts${libraryBasePath}${file}/${jsonFile}`
     );
     json = JSON.parse(json);
     abi.push(...json.abi);

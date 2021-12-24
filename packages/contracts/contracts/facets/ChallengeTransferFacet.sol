@@ -6,7 +6,7 @@ import {IERC721} from "../interfaces/IERC721.sol";
 import {LibChallenges} from "../libraries/LibChallenges.sol";
 import {LibERC1155} from "../libraries/LibERC1155.sol";
 
-contract ChallengesTransferFacet is Modifiers {
+contract ChallengeTransferFacet is Modifiers {
     /**
         @notice Transfers `_value` amount of an `_id` from the `_from` address to the `_to` address specified (with safety call).
         @dev Caller must be approved to manage the tokens being transferred out of the `_from` account (see "Approval" section of the standard).
