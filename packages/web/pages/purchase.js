@@ -1,11 +1,11 @@
-import constants from '/constants';
+import constants from '../../contracts/diamondABI/localAddresses.json';
 import Image from 'next/image';
 import usePoller from '/hooks/usePoller';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { ethers } from 'ethers';
 import { breakpoints } from '../styles';
-import ERC20 from '/artifacts/contracts/interfaces/IERC20.sol/IERC20.json';
+import ERC20 from '../../contracts/artifacts/contracts/interfaces/IERC20.sol/IERC20.json';
 
 import { Button } from '../components/UI';
 
@@ -13,11 +13,13 @@ import { Button } from '../components/UI';
 
 import SHE from '/assets/SHE.png';
 
-const cardData = [{
-  image: SHE,
-  title:"title",
-  description:"description"
-}]
+const cardData = [
+  {
+    image: SHE,
+    title: 'title',
+    description: 'description',
+  },
+];
 
 const Purchase = (props) => {
   const { web3Provider, address } = props;
@@ -25,18 +27,17 @@ const Purchase = (props) => {
   const [prtcleBalance, setPrtcleBalance] = useState('0');
 
   const getPrtcleBalance = async () => {
-    if (address && web3Provider) {
-      try {
-        const contract = new ethers.Contract(
-          prtcleAddress,
-          ERC20.abi,
-          web3Provider
-        );
-        const balance = await contract.balanceOf(address);
-        setPrtcleBalance(balance.toString());
-      } catch (e) {
-        console.log(e);
-      }
+    if (!address || !web3Provider) return;
+    try {
+      const contract = new ethers.Contract(
+        prtcleAddress,
+        ERC20.abi,
+        web3Provider
+      );
+      const balance = await contract.balanceOf(address);
+      setPrtcleBalance(balance.toString());
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -68,7 +69,7 @@ const Purchase = (props) => {
 
       <Auction>
         <AuctionHeader>
-        <Image src={SHE} height={70} width={70} />
+          <Image src={SHE} height={70} width={70} />
           <NFTTitle>Title of NFT</NFTTitle>
           <Text>
             Description of NFT that will probably need to be smaller and will
@@ -76,26 +77,18 @@ const Purchase = (props) => {
           </Text>
         </AuctionHeader>
         <NFTCards>
-        {[...Array(15).keys()].map(()=>(
-          <Card>
-          
-            
-       
-            
-            <CardContent>
-            <input placeholder={"Enter bid amount"}/>
+          {[...Array(15).keys()].map(() => (
+            <Card>
+              <CardContent>
+                <input placeholder={'Enter bid amount'} />
 
-            <Text>Receive</Text>
-            
-            <Button>Bid</Button>
-          
-            </CardContent>
-            <Title>Minimum Bid: 10 DAI</Title>
-            
-      
-          </Card>))
-          }
+                <Text>Receive</Text>
 
+                <Button>Bid</Button>
+              </CardContent>
+              <Title>Minimum Bid: 10 DAI</Title>
+            </Card>
+          ))}
         </NFTCards>
       </Auction>
 
@@ -181,10 +174,10 @@ const AuctionHeader = styled.div`
 `;
 
 const Auction = styled.section`
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Spacer = styled.div`
@@ -193,20 +186,20 @@ const Spacer = styled.div`
 `;
 
 const Card = styled.div`
-  display:flex;
-  flex-direction:row;
-  justify-content:space-around;
-  align-items:center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
   text-align: center;
   padding: 2rem 0;
   border-radius: 10px;
   position: relative;
   z-index: 3;
   /* background-color: #1a181a; */
-  backdrop-filter:blur(3px);
-  background-color: rgba(245,245,245,0.1);
+  backdrop-filter: blur(3px);
+  background-color: rgba(245, 245, 245, 0.1);
   border: 1px solid whitesmoke;
-  width:100%;
+  width: 100%;
 `;
 
 const CardBg = styled.div`
@@ -250,20 +243,20 @@ const Title = styled.h3`
 
 const NFTCards = styled.ul`
   display: flex;
-  width:80%;
-  justify-content:center;
-  align-items:center;
+  width: 80%;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
-  gap:2rem;
+  gap: 2rem;
   & > div {
     flex-basis: calc(100%);
   }
 `;
 
 const CardContent = styled.div`
-  display:flex;
-  flex-direction:row;
-  justify-content:space-around;
-  align-items:center;
-  gap:1rem;
-`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+`;

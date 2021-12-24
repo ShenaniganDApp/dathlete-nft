@@ -1,26 +1,85 @@
 import { ethers } from 'ethers';
-import { useCallback, useState } from 'react';
-import constants from '/constants';
+import { useEffect, useState, useCallback } from 'react';
+import constants from '../../contracts/diamondABI/localAddresses.json';
 import styled from 'styled-components';
+import usePoller from '/hooks/usePoller';
 
-import ERC20 from '/artifacts/contracts/interfaces/IERC20.sol/IERC20.json';
+import diamondABI from '../../contracts/diamondABI/diamond.json';
 import dynamic from 'next/dynamic';
 import { Formik, Form, Field } from 'formik';
 import Player from 'react-player';
+import ChallengeTypeScreen from '/components/create/ChallengeTypeScreen';
+import { ProgressBar } from '/components/UI';
+import { utils } from 'ethers';
 
 const SelfIdForm = dynamic(() => import('/components/SelfIdForm'), {
   ssr: false,
 });
 
+const progressLabels = ['Challenge Type', 'Upload', 'Confirm'];
+
 const Mint = (props) => {
   const { web3Provider, address } = props;
   const { diamondAddress, prtcleAddress } = constants;
+
   const [selfId, setSelfId] = useState();
   const [videoUrl, setVideoUrl] = useState('');
+  const [diamondContract, setDiamondContract] = useState();
+  const [activeChallenge, setActiveChallenge] = useState({});
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (!address || !web3Provider) return;
+    const contract = new ethers.Contract(
+      diamondAddress,
+      diamondABI,
+      web3Provider.getSigner()
+    );
+    setDiamondContract(contract);
+  }, [address, web3Provider]);
+
+  const getNewestChallengeType = async () => {
+    if (!diamondContract) return;
+    try {
+      const challengeType = await diamondContract.getNewestChallengeType();
+      setActiveChallenge(challengeType);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const addChallengeTypes = useCallback(
+    async (types) => {
+      const finalizedTypes = types.map((type, index) => {
+        return {
+          id: activeChallenge.id + index + 1,
+          
+          canBeTransferred: false,
+          ...type,
+        };
+      });
+      console.log('finalizedTypes: ', finalizedTypes);
+
+      await diamondContract.addChallengeTypes(finalizedTypes);
+    },
+    [diamondContract]
+  );
+
+  usePoller(
+    () => {
+      getNewestChallengeType();
+    },
+    props.pollTime ? props.pollTime : 1999
+  );
 
   return (
     <Main>
-      <Formik
+      <ProgressBar progressLabels={progressLabels} index={index} />
+      <ChallengeTypeScreen
+        addChallengeTypes={addChallengeTypes}
+        setIndex={setIndex}
+      />
+      {/* <Formik
         initialValues={{
           videoUrl: '',
         }}
@@ -33,10 +92,11 @@ const Mint = (props) => {
           <Field id="video" name="video" placeholder="Paste IPFS hash" />
         </Form>
       </Formik>
-      {!!videoUrl && <Player autoPlay={true} controls url={videoUrl} />}
+      {!!videoUrl && <Player autoPlay={true} controls url={videoUrl} />} */}
       <div>
-        <p> Upload </p>
-        <SelfIdForm videoUrl={videoUrl} s />
+        <p>{activeChallenge.name}</p>
+        <p>{activeChallenge.id}</p>
+        {/* <SelfIdForm videoUrl={videoUrl} /> */}
       </div>
     </Main>
   );
@@ -50,6 +110,7 @@ const Main = styled.main`
   align-items: center;
   flex-direction: column;
   height: 100vh;
+  position: relative;
 `;
 
 const FormFrame = styled.form`
