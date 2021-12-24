@@ -2,10 +2,10 @@
 /* eslint-disable  prefer-const */
 
 const { LedgerSigner } = require("@ethersproject/hardware-wallets");
-
+const constants = require("../diamondABI/localAddresses.json");
 
 let signer;
-const diamondAddress = "0x22753E4264FDDc6181dc7cce468904A80a363E44";
+const diamondAddress = constants.diamondAddress;
 const gasLimit = 15000000;
 const gasPrice = 20000000000;
 
