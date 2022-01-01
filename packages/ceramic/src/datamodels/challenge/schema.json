@@ -13,10 +13,7 @@
     "description": {
       "type": "string",
       "maxLength": 420
-    },
-    "video": {
-      "$ref": "#/definitions/videoSources"
-    }
+    } 
   },
   "definitions": {
     "IPFSUrl": {

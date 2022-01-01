@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "web": "yarn workspace web",
-    "contracts": "yarn workspace contracts"
+    "contracts": "yarn workspace contracts",
+    "ceramic": "yarn workspace ceramic"
   },
   "workspaces": [
     "packages/*"
@@ -26,6 +27,7 @@
   "dependencies": {
     "next": "12.0.3",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "dotenv": "^10.0.0"
   }
 }

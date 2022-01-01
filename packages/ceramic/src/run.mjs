@@ -7,11 +7,10 @@ import { getResolver } from 'key-did-resolver'
 import { fromString } from 'uint8arrays'
 
 // Import the model aliases created during development time
-import modelAliases from './challenge/model.json'
+import modelAliases from './datamodels/challenge/model.json'
 
 // The key must be provided as an environment variable
-const key = fromString("b09f49a32ded0cac6dcdcc60877b5ed277ba5428dbf7f36336478525cdc7db5d", 'base16')
-
+const key = fromString(process.env.PK, 'base16')
 // Create and authenticate the DID
 const did = new DID({
   provider: new Ed25519Provider(key),
@@ -26,6 +25,3 @@ ceramic.did = did
 // Create the model and store
 const model = new DataModel({ ceramic, model: modelAliases })
 const store = new DIDDataStore({ ceramic, model })
-
-const challengeNFT = await model.loadTile('challengeNFT')
-console.log('challengeNFT: ', challengeNFT);
