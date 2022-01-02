@@ -20,13 +20,14 @@ const progressLabels = ['Challenge Type', 'Upload', 'Confirm'];
 
 const Mint = (props) => {
   const { web3Provider, address } = props;
-  const { diamondAddress, prtcleAddress } = constants;
+  const { diamondAddress } = constants;
 
-  const [selfId, setSelfId] = useState();
   const [videoUrl, setVideoUrl] = useState('');
   const [diamondContract, setDiamondContract] = useState();
   const [activeChallenge, setActiveChallenge] = useState({});
   const [index, setIndex] = useState(0);
+  
+
 
   useEffect(() => {
     if (!address || !web3Provider) return;

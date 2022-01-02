@@ -1,10 +1,21 @@
 import Particles from 'react-tsparticles';
 import '../styles/globals.css';
+import dynamic from 'next/dynamic';
 import Web3Modal from 'web3modal';
 import { providers } from 'ethers';
 import { useCallback, useEffect, useReducer } from 'react';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import styled from 'styled-components';
+
+import { networks } from '../auth';
+import { CERAMIC_URL, CONNECT_NETWORK } from '../constants';
+
+const SelfIdButton = dynamic(() => import('/components/SelfIdButton'), {
+  ssr: false,
+});
+const Provider = dynamic(() => import('/components/SelfIdProvider'), {
+  ssr: false,
+});
 
 const providerOptions = {
   walletconnect: {
@@ -57,7 +68,6 @@ function reducer(state, action) {
       throw new Error();
   }
 }
-
 
 function MyApp({ Component, pageProps }) {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -149,7 +159,10 @@ function MyApp({ Component, pageProps }) {
 
   // const chainData = getChainData(chainId);
   return (
-    <>
+    <Provider
+      auth={{ networks }}
+      client={{ ceramic: CERAMIC_URL, connectNetwork: CONNECT_NETWORK }}
+    >
       <Particles
         id="tsparticles"
         style={{
@@ -235,6 +248,7 @@ function MyApp({ Component, pageProps }) {
               <Text>Connect</Text>
             </ButtonFrame>
           )}
+          <SelfIdButton />
         </Header>
         <Component
           address={address}
@@ -242,7 +256,7 @@ function MyApp({ Component, pageProps }) {
           {...pageProps}
         />
       </div>
-    </>
+    </Provider>
   );
 }
 

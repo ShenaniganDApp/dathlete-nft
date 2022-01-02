@@ -1,29 +1,32 @@
-import { useConnection } from '@self.id/framework'
+import { useConnection } from '@self.id/framework';
+import { Button } from '/components/UI';
 
-export default function ConnectButton() {
-  const [connection, connect, disconnect] = useConnection()
-  console.log('connection: ', connection);
+import { useLogin, useLogout} from '/hooks/useLogin';
 
+const style = { color: 'black', width: 200 };
 
-  return connection.status === 'connected' ? (
-    <button
-      onClick={() => {
-        disconnect()
-      }}>
-      Disconnect ({connection.selfID.id})
-    </button>
-  ) : 'ethereum' in window ? (
-    <button
-      disabled={connection.status === 'connecting'}
-      onClick={() => {
-        connect()
-      }}>
-      Connect
+function SelfIdButton() {
+  const [connection] = useConnection();
+  const login = useLogin();
+  const logout = useLogout();
+
+  if (connection.status === 'connected') {
+    return (
+      <button onClick={() => logout()} style={style}>
+        Connected
+      </button>
+    );
+  }
+
+  return connection.status === 'connecting' ? (
+    <button disabled style={style}>
+      Connecting...
     </button>
   ) : (
-    <p>
-      An injected Ethereum provider such as{' '}
-      <a href="https://metamask.io/">MetaMask</a> is needed to authenticate.
-    </p>
-  )
+    <button onClick={() => login()} style={style}>
+      Connect
+    </button>
+  );
 }
+
+export default SelfIdButton;
