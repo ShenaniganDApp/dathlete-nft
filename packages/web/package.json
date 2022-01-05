@@ -29,6 +29,7 @@
     "ipfs-http-client": "^54.0.0",
     "react-dropzone": "^11.4.2",
     "react-flip-ticker": "^1.0.2",
+    "react-hot-toast": "^2.1.1",
     "react-player": "^2.9.0",
     "react-tsparticles": "^1.37.4",
     "styled-components": "^5.3.3",
