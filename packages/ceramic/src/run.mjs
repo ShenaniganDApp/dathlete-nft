@@ -25,3 +25,4 @@ ceramic.did = did
 // Create the model and store
 const model = new DataModel({ ceramic, model: modelAliases })
 const store = new DIDDataStore({ ceramic, model })
+

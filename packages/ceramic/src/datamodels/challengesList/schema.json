@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ChallengesList",
+  "type": "object",
+  "properties": {
+    "challenges": {
+      "type": "array",
+      "title": "challenges",
+      "items": {
+        "type": "object",
+        "title": "ChallengeItem",
+        "properties": {
+          "id": {
+            "$ref": "#/definitions/CeramicStreamId"
+          },
+          "title": {
+            "type": "string",
+            "title": "title",
+            "maxLength": 100
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "CeramicStreamId": {
+      "type": "string",
+      "pattern": "^ceramic://.+(\\\\?version=.+)?",
+      "maxLength": 150
+    }
+  }
+}

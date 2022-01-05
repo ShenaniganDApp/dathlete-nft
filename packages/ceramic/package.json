@@ -20,6 +20,7 @@
   "scripts": {
     "ceramic": "ceramic daemon",
     "ceramic:publish": "node --experimental-json-modules src/publish.mjs",
+    "ceramic:update": "node --experimental-json-modules src/update.mjs",
     "ceramic:run": "node --experimental-json-modules src/run.mjs",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
