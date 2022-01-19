@@ -125,14 +125,14 @@ const Main = styled.main`
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
 `;
 
 const FormFrame = styled.form`
   display: flex;
   flex-direction: column;
-  height: 150px;
+  /* height: 150px; */
   justify-content: space-around;
 `;
 
