@@ -9,10 +9,13 @@ const diamondAddress = constants.diamondAddress;
 const gasLimit = 15000000;
 const gasPrice = 20000000000;
 
-
 async function main() {
   const challengeManager = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-  const newManagers = ["0xaa6194a7eA189d11fd5adE366a5e7C98e81aF1Af"]
+  const newManagers = [
+    "0xaa6194a7eA189d11fd5adE366a5e7C98e81aF1Af",
+    "0x748De431c0a978f4f5B61dbED749Adca710A282B",
+    "0x21412ECED9d4c282b584b42fEaE993fC3C1CF9A6",
+  ];
 
   let owner = challengeManager;
   const testing = ["hardhat", "localhost"].includes(hre.network.name);
@@ -58,4 +61,4 @@ if (require.main === module) {
     });
 }
 
-exports.addTestChallenges
+exports.addTestChallenges;

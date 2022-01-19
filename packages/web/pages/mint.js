@@ -3,7 +3,8 @@ import { useEffect, useState, useCallback } from 'react';
 import constants from '../../contracts/diamondABI/localAddresses.json';
 import styled from 'styled-components';
 import usePoller from '/hooks/usePoller';
-import { useGetNewestChallengeType } from '../hooks/useGetNewestChallengeType';
+import { useGetNewestChallengeType } from '/hooks/useGetNewestChallengeType';
+import { useChallengeContract } from '/hooks/useChallengeContract';
 
 import diamondABI from '../../contracts/diamondABI/diamond.json';
 import dynamic from 'next/dynamic';
@@ -12,6 +13,7 @@ import Player from 'react-player';
 import ChallengeTypeScreen from '/components/create/ChallengeTypeScreen';
 import { ProgressBar } from '/components/UI';
 import { utils } from 'ethers';
+import { calculateGasMargin, GAS_MARGIN } from '../utils';
 
 const SelfIdForm = dynamic(() => import('/components/SelfIdForm'), {
   ssr: false,
@@ -23,7 +25,7 @@ const Mint = (props) => {
   const { web3Provider, address } = props;
   const { diamondAddress } = constants;
   const activeChallenge = useGetNewestChallengeType(web3Provider);
-  console.log('activeChallenge: ', activeChallenge);
+  const challengeContract = useChallengeContract(web3Provider);
 
   const [videoUrl, setVideoUrl] = useState('');
   const [diamondContract, setDiamondContract] = useState();
@@ -58,11 +60,37 @@ const Mint = (props) => {
 
   usePoller(() => {}, props.pollTime ? props.pollTime : 1999);
 
+  const onAddChallengeTypes = async (types) => {
+    const finalizedTypes = types.map((type, index) => {
+      return {
+        id: activeChallenge.id + index + 1,
+
+        canBeTransferred: false,
+        ...type,
+      };
+    });
+
+    const estimatedGasPrice = await web3Provider
+
+      .getGasPrice()
+      .then((gasPrice) =>
+        gasPrice.mul(ethers.BigNumber.from(150)).div(ethers.BigNumber.from(100))
+      );
+
+    const estimatedGasLimit =
+      await challengeContract.estimateGas.addChallengeTypes(finalizedTypes);
+
+    return challengeContract.addChallengeTypes(finalizedTypes, {
+      gasLimit: calculateGasMargin(estimatedGasLimit, GAS_MARGIN),
+      gasPrice: estimatedGasPrice,
+    });
+  };
+
   return (
     <Main>
       <ProgressBar progressLabels={progressLabels} index={index} />
       <ChallengeTypeScreen
-        addChallengeTypes={addChallengeTypes}
+        addChallengeTypes={onAddChallengeTypes}
         setIndex={setIndex}
       />
       {/* <Formik
