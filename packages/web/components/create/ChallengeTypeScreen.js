@@ -16,7 +16,7 @@ const placeholderChallengeType = {
 
 const ChallengeTypeScreen = (props) => {
   return (
-    <div>
+    <div className="bg-white/10 p-10 rounded w-full max-w-4xl backdrop-blur-sm">
       <Formik
         initialValues={{
           name: '',
@@ -32,7 +32,7 @@ const ChallengeTypeScreen = (props) => {
           const price = utils.parseEther(prtclePrice).toString();
           const quantity = utils.parseEther(maxQuantity).toString();
           const total = utils.parseEther(totalQuantity).toString();
-          
+
           await props.addChallengeTypes([
             {
               name,
@@ -47,12 +47,18 @@ const ChallengeTypeScreen = (props) => {
           actions.setSubmitting(false);
         }}
       >
-        <FormFrame>
-          <Field id="name" name="name" placeholder="Challenge Title" />
+        <FormFrame className="flex flex-col gap-8">
+          <Field
+            className="py-4 px-8 text-gray-800 rounded"
+            id="name"
+            name="name"
+            placeholder="Challenge Title"
+          />
           <Field
             id="description"
             name="description"
             placeholder="Enter Description"
+            className="py-4 px-8 text-gray-800 rounded"
           >
             {({ field, form, meta }) => {
               return (
@@ -60,6 +66,9 @@ const ChallengeTypeScreen = (props) => {
                   name="description"
                   value={field.value}
                   onChange={field.onChange}
+                  placeholder="Description"
+                  style={{ resize: 'none' }}
+                  className="py-4 px-8 text-gray-800 rounded min-h-xl"
                 />
               );
             }}
@@ -68,16 +77,19 @@ const ChallengeTypeScreen = (props) => {
             id="prtclePrice"
             name="prtclePrice"
             placeholder="Starting Price (in Particle)"
+            className="py-4 px-8 text-gray-800 rounded"
           />
           <Field
             id="maxQuantity"
             name="maxQuantity"
             placeholder="Max quantity"
+            className="py-4 px-8 text-gray-800 rounded"
           />
           <Field
             id="totalQuantity"
             name="totalQuantity"
             placeholder="Total Quantity"
+            className="py-4 px-8 text-gray-800 rounded"
           />
           <button type="submit">Next</button>
         </FormFrame>
@@ -95,5 +107,4 @@ const FormFrame = styled(Form)`
   flex-direction: column;
   justify-content: space-around;
   align-items: space-around;
-  height: 200px;
 `;
