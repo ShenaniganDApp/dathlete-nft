@@ -2,7 +2,7 @@ import { LedgerSigner } from "@ethersproject/hardware-wallets";
 import { task } from "hardhat/config";
 import { ContractReceipt, ContractTransaction } from "@ethersproject/contracts";
 import { Signer } from "@ethersproject/abstract-signer";
-import { ChallengesTransferFacet } from "../typechain";
+import { ChallengeTransferFacet } from "../typechain";
 import { gasPrice, xDaiDiamondAddress } from "../scripts/helperFunctions";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { ethers } from "ethers";
