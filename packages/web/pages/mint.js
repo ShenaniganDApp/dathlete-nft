@@ -3,6 +3,7 @@ import { useEffect, useState, useCallback } from 'react';
 import constants from '../../contracts/diamondABI/localAddresses.json';
 import styled from 'styled-components';
 import usePoller from '/hooks/usePoller';
+import { useGetNewestChallengeType } from '../hooks/useGetNewestChallengeType';
 
 import diamondABI from '../../contracts/diamondABI/diamond.json';
 import dynamic from 'next/dynamic';
@@ -21,13 +22,12 @@ const progressLabels = ['Challenge Type', 'Upload', 'Confirm'];
 const Mint = (props) => {
   const { web3Provider, address } = props;
   const { diamondAddress } = constants;
+  const activeChallenge = useGetNewestChallengeType(web3Provider);
+  console.log('activeChallenge: ', activeChallenge);
 
   const [videoUrl, setVideoUrl] = useState('');
   const [diamondContract, setDiamondContract] = useState();
-  const [activeChallenge, setActiveChallenge] = useState({});
   const [index, setIndex] = useState(0);
-  
-
 
   useEffect(() => {
     if (!address || !web3Provider) return;
@@ -39,22 +39,12 @@ const Mint = (props) => {
     setDiamondContract(contract);
   }, [address, web3Provider]);
 
-  const getNewestChallengeType = async () => {
-    if (!diamondContract) return;
-    try {
-      const challengeType = await diamondContract.getNewestChallengeType();
-      setActiveChallenge(challengeType);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const addChallengeTypes = useCallback(
     async (types) => {
       const finalizedTypes = types.map((type, index) => {
         return {
           id: activeChallenge.id + index + 1,
-          
+
           canBeTransferred: false,
           ...type,
         };
@@ -66,12 +56,7 @@ const Mint = (props) => {
     [diamondContract]
   );
 
-  usePoller(
-    () => {
-      getNewestChallengeType();
-    },
-    props.pollTime ? props.pollTime : 1999
-  );
+  usePoller(() => {}, props.pollTime ? props.pollTime : 1999);
 
   return (
     <Main>
@@ -94,11 +79,13 @@ const Mint = (props) => {
         </Form>
       </Formik>
       {!!videoUrl && <Player autoPlay={true} controls url={videoUrl} />} */}
-      <div>
-        <p>{activeChallenge.name}</p>
-        <p>{activeChallenge.id}</p>
-        {/* <SelfIdForm videoUrl={videoUrl} /> */}
-      </div>
+      {activeChallenge && (
+        <div>
+          <p>{activeChallenge.name}</p>
+          <p>{activeChallenge.id}</p>
+          {/* <SelfIdForm videoUrl={videoUrl} /> */}
+        </div>
+      )}
     </Main>
   );
 };
