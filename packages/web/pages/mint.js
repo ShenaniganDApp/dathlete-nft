@@ -10,7 +10,7 @@ import diamondABI from '../../contracts/diamondABI/diamond.json';
 import dynamic from 'next/dynamic';
 import { Formik, Form, Field } from 'formik';
 import Player from 'react-player';
-import ChallengeTypeScreen from '/components/create/ChallengeTypeScreen';
+import ChallengeTypeScreen from '/components/mint/ChallengeTypeScreen';
 import { ProgressBar } from '/components/UI';
 import { utils } from 'ethers';
 import { calculateGasMargin, GAS_MARGIN } from '../utils';
