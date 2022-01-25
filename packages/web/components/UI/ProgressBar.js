@@ -1,6 +1,5 @@
-import React, { ReactElement, useState } from 'react';
-import styled from 'styled-components';
-import { colors } from '../UI';
+import React from 'react';
+import { motion } from 'framer-motion';
 import Icon from '@mdi/react';
 import { mdiCheckBold } from '@mdi/js';
 
@@ -10,13 +9,16 @@ export const ProgressBar = ({ progressLabels, index }) => {
       <div className="flex row justify-around ">
         {progressLabels.map((item, itemIndex) => (
           <div
-            className={`flex items-center justify-center flex-1 py-4 pointer-events-none ${
-              index === itemIndex && 'bg-sky-500 rounded-full shadow-xl'
-            } 
-            `}
+            className={`relative flex items-center justify-center flex-1 py-4 pointer-events-none`}
             key={item}
           >
-            <div className="">
+            {index === itemIndex && (
+              <motion.div
+                className="absolute bg-red-500 h-full w-full rounded-full bg-sky-500"
+                layoutId="progress-pill"
+              ></motion.div>
+            )}
+            <div className="relative z-1">
               {index > itemIndex ? (
                 <Icon
                   className="m-auto"
@@ -25,7 +27,7 @@ export const ProgressBar = ({ progressLabels, index }) => {
                   color={'cyan'}
                 />
               ) : (
-                <p className="text-3xl font-bold">{item}</p>
+                <p className="text-3xl font-bold ">{item}</p>
               )}
             </div>
           </div>
