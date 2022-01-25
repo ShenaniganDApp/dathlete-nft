@@ -14,9 +14,9 @@ const placeholderChallengeType = {
   totalQuantity: 0,
 };
 
-const ChallengeTypeScreen = (props) => {
+export const ChallengeTypeScreen = (props) => {
   return (
-    <div className="bg-white/10 p-10 rounded w-full max-w-4xl backdrop-blur-sm">
+    <div className="bg-white/10 p-10 rounded backdrop-blur-sm ">
       <Formik
         initialValues={{
           name: '',
@@ -29,25 +29,25 @@ const ChallengeTypeScreen = (props) => {
           { name, description, prtclePrice, maxQuantity, totalQuantity },
           actions
         ) => {
-          const price = utils.parseEther(prtclePrice).toString();
-          const quantity = utils.parseEther(maxQuantity).toString();
-          const total = utils.parseEther(totalQuantity).toString();
+          // const price = utils.parseEther(prtclePrice).toString();
+          // const quantity = utils.parseEther(maxQuantity).toString();
+          // const total = utils.parseEther(totalQuantity).toString();
 
-          await props.addChallengeTypes([
-            {
-              name,
-              description,
-              prtclePrice: price,
-              maxQuantity: quantity,
-              totalQuantity: total,
-            },
-          ]);
+          // await props.addChallengeTypes([
+          //   {
+          //     name,
+          //     description,
+          //     prtclePrice: price,
+          //     maxQuantity: quantity,
+          //     totalQuantity: total,
+          //   },
+          // ]);
           props.setIndex(1);
 
           actions.setSubmitting(false);
         }}
       >
-        <FormFrame className="flex flex-col gap-8">
+        <FormFrame className="flex flex-col gap-8 ">
           <Field
             className="py-4 px-8 text-gray-800 rounded"
             id="name"
@@ -97,8 +97,6 @@ const ChallengeTypeScreen = (props) => {
     </div>
   );
 };
-
-export default ChallengeTypeScreen;
 
 const TextArea = styled.textarea``;
 

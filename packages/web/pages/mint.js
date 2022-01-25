@@ -8,12 +8,11 @@ import { useChallengeContract } from '/hooks/useChallengeContract';
 
 import diamondABI from '../../contracts/diamondABI/diamond.json';
 import dynamic from 'next/dynamic';
-import { Formik, Form, Field } from 'formik';
-import Player from 'react-player';
-import ChallengeTypeScreen from '/components/mint/ChallengeTypeScreen';
+import { ChallengeTypeScreen } from '/components/mint/ChallengeTypeScreen';
+import { ChallengeMintScreen } from '/components/mint/ChallengeMintScreen';
 import { ProgressBar } from '/components/UI';
-import { utils } from 'ethers';
 import { calculateGasMargin, GAS_MARGIN } from '../utils';
+import { AnimatePresence, motion } from 'framer-motion';
 
 const SelfIdForm = dynamic(() => import('/components/SelfIdForm'), {
   ssr: false,
@@ -86,13 +85,38 @@ const Mint = (props) => {
     });
   };
 
+  const currentPage = (i) => {
+    switch (i) {
+      case 0:
+        return (
+          <ChallengeTypeScreen
+            addChallengeTypes={onAddChallengeTypes}
+            setIndex={setIndex}
+          />
+        );
+      case 1:
+        return <ChallengeMintScreen />;
+      default:
+        return null;
+    }
+  };
+
   return (
-    <Main>
+    <div className='flex flex-col justify-center items-center gap-10 mt-20'>
       <ProgressBar progressLabels={progressLabels} index={index} />
-      <ChallengeTypeScreen
-        addChallengeTypes={onAddChallengeTypes}
-        setIndex={setIndex}
-      />
+      <AnimatePresence exitBeforeEnter initial={false}>
+        <motion.div
+          key={index}
+          animate={{ x: 0, y: 0 }}
+          initial={{ x: 500, y: 0 }}
+          exit={{ x: -500, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className='w-full max-w-4xl'
+        >
+          {currentPage(index)}
+        </motion.div>
+      </AnimatePresence>
+
       {/* <Formik
         initialValues={{
           videoUrl: '',
@@ -114,20 +138,11 @@ const Mint = (props) => {
           {/* <SelfIdForm videoUrl={videoUrl} /> */}
         </div>
       )}
-    </Main>
+    </div>
   );
 };
 
 export default Mint;
-
-const Main = styled.main`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
-  min-height: 100vh;
-  position: relative;
-`;
 
 const FormFrame = styled.form`
   display: flex;

@@ -9,7 +9,7 @@ export const ProgressBar = ({ progressLabels, index }) => {
       <div className="flex row justify-around ">
         {progressLabels.map((item, itemIndex) => (
           <div
-            className={`relative flex items-center justify-center flex-1 py-4 pointer-events-none`}
+            className={`relative flex items-center justify-center flex-1 h-24 pointer-events-none`}
             key={item}
           >
             {index === itemIndex && (
