@@ -14,7 +14,6 @@ async function main() {
   const newManagers = [
     "0xaa6194a7eA189d11fd5adE366a5e7C98e81aF1Af",
     "0x748De431c0a978f4f5B61dbED749Adca710A282B",
-    "0x21412ECED9d4c282b584b42fEaE993fC3C1CF9A6",
   ];
 
   let owner = challengeManager;

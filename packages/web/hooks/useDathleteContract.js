@@ -1,14 +1,14 @@
 import { useMemo } from 'react/cjs/react.development';
-import { getChallengeContract } from '../utils';
+import { getDathleteContract } from '../utils';
 
-export const useChallengeContract = (
+export const useDathleteContract = (
   web3Provider,
   withSignerIfPossible = true
 ) => {
   return useMemo(() => {
     try {
-      return getChallengeContract(
-        withSignerIfPossible ? web3Provider.getSigner() : null
+      return getDathleteContract(
+        withSignerIfPossible ? web3Provider.getSigner() : web3Provider
       );
     } catch {
       return null;
