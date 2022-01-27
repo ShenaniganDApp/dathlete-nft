@@ -4,7 +4,7 @@ import constants from '../../contracts/diamondABI/localAddresses.json';
 import styled from 'styled-components';
 import usePoller from '/hooks/usePoller';
 import { useGetNewestChallengeType } from '/hooks/useGetNewestChallengeType';
-import { useChallengeContract } from '/hooks/useChallengeContract';
+import { useDathleteContract } from '/hooks/useDathleteContract';
 
 import diamondABI from '../../contracts/diamondABI/diamond.json';
 import dynamic from 'next/dynamic';
@@ -13,6 +13,7 @@ import { ChallengeMintScreen } from '/components/mint/ChallengeMintScreen';
 import { ProgressBar } from '/components/UI';
 import { calculateGasMargin, GAS_MARGIN } from '../utils';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useGetChallengeBalances } from '../hooks/useGetChallengeBalances';
 
 const SelfIdForm = dynamic(() => import('/components/SelfIdForm'), {
   ssr: false,
@@ -24,38 +25,12 @@ const Mint = (props) => {
   const { web3Provider, address } = props;
   const { diamondAddress } = constants;
   const activeChallenge = useGetNewestChallengeType(web3Provider);
-  const challengeContract = useChallengeContract(web3Provider);
+  const balances = useGetChallengeBalances(address, web3Provider);
+  console.log('balances: ', balances);
+  const challengeContract = useDathleteContract(web3Provider);
 
   const [videoUrl, setVideoUrl] = useState('');
-  const [diamondContract, setDiamondContract] = useState();
   const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    if (!address || !web3Provider) return;
-    const contract = new ethers.Contract(
-      diamondAddress,
-      diamondABI,
-      web3Provider.getSigner()
-    );
-    setDiamondContract(contract);
-  }, [address, web3Provider]);
-
-  const addChallengeTypes = useCallback(
-    async (types) => {
-      const finalizedTypes = types.map((type, index) => {
-        return {
-          id: activeChallenge.id + index + 1,
-
-          canBeTransferred: false,
-          ...type,
-        };
-      });
-      console.log('finalizedTypes: ', finalizedTypes);
-
-      await diamondContract.addChallengeTypes(finalizedTypes);
-    },
-    [diamondContract]
-  );
 
   usePoller(() => {}, props.pollTime ? props.pollTime : 1999);
 
@@ -102,7 +77,7 @@ const Mint = (props) => {
   };
 
   return (
-    <div className='flex flex-col justify-center items-center gap-10 mt-20'>
+    <div className="flex flex-col justify-center items-center gap-10 mt-20">
       <ProgressBar progressLabels={progressLabels} index={index} />
       <AnimatePresence exitBeforeEnter initial={false}>
         <motion.div
@@ -111,7 +86,7 @@ const Mint = (props) => {
           initial={{ x: 500, y: 0 }}
           exit={{ x: -500, y: 0 }}
           transition={{ duration: 0.3 }}
-          className='w-full max-w-4xl'
+          className="w-full max-w-4xl"
         >
           {currentPage(index)}
         </motion.div>

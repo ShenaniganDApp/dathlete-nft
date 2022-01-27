@@ -21,16 +21,16 @@ export const getContract = (address, abi, web3Provider) => {
 };
 
 export const getNewestChallengeType = (web3Provider) => {
-  const contract = getContract(
+  const activeChallenge = getContract(
     localAddresses.diamondAddress,
     challengeAbi,
     web3Provider
   ).getNewestChallengeType();
 
-  return contract;
+  return activeChallenge;
 };
 
-export const getChallengeContract = (web3Provider) => {
+export const getDathleteContract = (web3Provider) => {
   const contract = getContract(
     localAddresses.diamondAddress,
     challengeAbi,
@@ -43,3 +43,13 @@ export function calculateGasMargin(value, margin) {
   const offset = value.mul(margin).div(ethers.BigNumber.from(10000));
   return value.add(offset);
 }
+
+export const getChallengeBalances = (address, web3Provider) => {
+  const balances = getContract(
+    localAddresses.diamondAddress,
+    challengeAbi,
+    web3Provider
+  ).challengeBalances(address);
+
+  return balances;
+};
