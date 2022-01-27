@@ -12,7 +12,7 @@ require("./tasks/verifyFacet.ts");
 require("./tasks/generateDiamondABI.ts");
 // require("./tasks/generateDiamondABI_eth.ts");
 require("./tasks/batchDeposit.ts");
-// require("./tasks/addItemTypes.ts");
+require("./tasks/addChallengeTypes.ts");
 
 // You have to export an object to set up your config
 // This object can have the following optional entries:
@@ -36,7 +36,7 @@ export default {
     },
     // xdai: {
     //   url: process.env.XDAI_URL,
-      
+
     //   // url: 'https://rpc-mainnet.maticvigil.com/',
     //   accounts: [process.env.CHALLENGE_MANAGER],
     //   // blockGasLimit: 20000000,
