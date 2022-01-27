@@ -6,83 +6,32 @@ import { mdiCheckBold } from '@mdi/js';
 
 export const ProgressBar = ({ progressLabels, index }) => {
   return (
-    <Container>
-      <Row>
+    <div className="w-full max-w-3xl bg-slate-500/50 rounded-full overflow-hidden">
+      <div className="flex row justify-around ">
         {progressLabels.map((item, itemIndex) => (
-          <ItemContainer key={item}>
-            <DotContainer>
-              <Dot />
-              {index === itemIndex && <DotFill />}
-              {index > itemIndex && (
-                <IconFrame path={mdiCheckBold} size={5} color={'cyan'} />
+          <div
+            className={`flex items-center justify-center flex-1 py-4 pointer-events-none ${
+              index === itemIndex && 'bg-sky-500 rounded-full shadow-xl'
+            } 
+            `}
+            key={item}
+          >
+            <div className="">
+              {index > itemIndex ? (
+                <Icon
+                  className="m-auto"
+                  path={mdiCheckBold}
+                  size={3}
+                  color={'cyan'}
+                />
+              ) : (
+                <p className="text-3xl font-bold">{item}</p>
               )}
-            </DotContainer>
-
-            <Label>{item}</Label>
-          </ItemContainer>
+            </div>
+          </div>
         ))}
-      </Row>
-      <Divider />
-    </Container>
+      </div>
+      <div />
+    </div>
   );
 };
-
-const Container = styled.div`
-  /* display: flex; */
-  margin-bottom: 6%;
-`;
-
-const Row = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
-const ItemContainer = styled.div`
-  display: flex;
-  align-items: center;
-  flex: 1;
-`;
-
-const DotContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-const Dot = styled.div`
-  width: 22px;
-  height: 22px;
-  border-radius: 20px;
-  background-color: white;
-`;
-
-const DotFill = styled.div`
-  width: 16px;
-  height: 16px;
-  border-radius: 20px;
-  background-color: cyan;
-  position: absolute;
-`;
-
-const Label = styled.p`
-  color: white;
-  font-size: 16px;
-`;
-
-const IconFrame = styled(Icon)`
-  position: absolute;
-  top: -8px;
-  left: 0px;
-`;
-
-const Divider = styled.div`
-  display: flex;
-  height: 2px;
-  width: 66.666%;
-  background-color: whitesmoke;
-  position: absolute;
-  top: 11px;
-  align-self: center;
-  z-index: -1;
-`;
