@@ -34,9 +34,13 @@ export default {
     localhost: {
       url: "http://localhost:8545",
     },
+    zksyncTestnet: {
+      url: "https://zksync2-testnet.zksync.dev",
+      timeout: 120000000,
+    },
     // xdai: {
     //   url: process.env.XDAI_URL,
-      
+
     //   // url: 'https://rpc-mainnet.maticvigil.com/',
     //   accounts: [process.env.CHALLENGE_MANAGER],
     //   // blockGasLimit: 20000000,

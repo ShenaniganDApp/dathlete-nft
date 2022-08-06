@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.1;
 
 contract Particle {
     uint256 constant MAX_UINT = type(uint256).max;
@@ -59,7 +59,7 @@ contract Particle {
         require(contractOwner == msg.sender);
 
         uint256 index = approvedContractIndexes[_contract];
-        require(index > 0, "GHSTFacet: Approved contract does not exist");
+        require(index > 0, "PRTCLEFacet: Approved contract does not exist");
         uint256 lastIndex = _approvedContracts.length;
         if (index != lastIndex) {
             address lastContract = _approvedContracts[lastIndex - 1];
@@ -84,13 +84,13 @@ contract Particle {
             // pass
         } else {
             uint256 l_allowance = allowances[_from][msg.sender];
-            require(l_allowance >= _value, "GHST: Not allowed to transfer");
+            require(l_allowance >= _value, "PRTCLE: Not allowed to transfer");
             if (l_allowance != MAX_UINT) {
                 allowances[_from][msg.sender] = l_allowance - _value;
                 emit Approval(_from, msg.sender, l_allowance - _value);
             }
         }
-        require(fromBalance >= _value, "GHST: Not enough GHST to transfer");
+        require(fromBalance >= _value, "PRTCLE: Not enough PRTCLE to transfer");
         balances[_from] = fromBalance - _value;
         balances[_to] += _value;
         emit Transfer(_from, _to, _value);
@@ -106,7 +106,7 @@ contract Particle {
     function increaseAllowance(address _spender, uint256 _value) external returns (bool success) {
         uint256 l_allowance = allowances[msg.sender][_spender];
         uint256 newAllowance = l_allowance + _value;
-        require(newAllowance >= l_allowance, "GHSTFacet: Allowance increase overflowed");
+        require(newAllowance >= l_allowance, "PRTCLEFacet: Allowance increase overflowed");
         allowances[msg.sender][_spender] = newAllowance;
         emit Approval(msg.sender, _spender, newAllowance);
         success = true;
@@ -114,7 +114,7 @@ contract Particle {
 
     function decreaseAllowance(address _spender, uint256 _value) external returns (bool success) {
         uint256 l_allowance = allowances[msg.sender][_spender];
-        require(l_allowance >= _value, "GHSTFacet: Allowance decreased below 0");
+        require(l_allowance >= _value, "PRTCLEFacet: Allowance decreased below 0");
         l_allowance -= _value;
         allowances[msg.sender][_spender] = l_allowance;
         emit Approval(msg.sender, _spender, l_allowance);
