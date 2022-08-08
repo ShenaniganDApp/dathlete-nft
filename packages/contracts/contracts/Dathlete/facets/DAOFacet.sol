@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.1;
+pragma solidity ^0.8.15;
 
 import {Modifiers, ChallengeType} from "../libraries/LibAppStorage.sol";
 import {LibERC1155} from "../../shared/libraries/LibERC1155.sol";

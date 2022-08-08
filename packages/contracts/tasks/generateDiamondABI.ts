@@ -2,8 +2,9 @@ const fs = require("fs");
 import { AbiCoder } from "@ethersproject/abi";
 import { task } from "hardhat/config";
 
-const basePath = "/contracts/facets/";
-const libraryBasePath = "/contracts/libraries/";
+const basePath = "/contracts/PART/facets/";
+const libraryBasePath = "/contracts/PART/libraries/";
+const sharedLibraryBasePath = "/contracts/shared/libraries/";
 
 task(
   "diamondABI",
@@ -13,8 +14,7 @@ task(
   let abi: AbiCoder[] = [];
   for (const file of files) {
     const jsonFile = file.replace("sol", "json");
-    let json = fs.readFileSync(`./artifacts/contracts/facets/${file}/${jsonFile}`);
-
+    let json = fs.readFileSync(`./artifacts/${basePath}${file}/${jsonFile}`);
     json = JSON.parse(json);
     abi.push(...json.abi);
   }
@@ -22,7 +22,16 @@ task(
   for (const file of files) {
     const jsonFile = file.replace("sol", "json");
     let json = fs.readFileSync(
-      `./artifacts${libraryBasePath}${file}/${jsonFile}`
+      `./artifacts/${libraryBasePath}${file}/${jsonFile}`
+    );
+    json = JSON.parse(json);
+    abi.push(...json.abi);
+  }
+  files = fs.readdirSync("." + sharedLibraryBasePath);
+  for (const file of files) {
+    const jsonFile = file.replace("sol", "json");
+    let json = fs.readFileSync(
+      `./artifacts/${sharedLibraryBasePath}${file}/${jsonFile}`
     );
     json = JSON.parse(json);
     abi.push(...json.abi);

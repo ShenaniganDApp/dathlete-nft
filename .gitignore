@@ -38,3 +38,5 @@ cache
 artifacts
 typechain
 ipfs
+artifacts-zk
+cache-zk

@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.1;
+pragma solidity ^0.8.15;
 
 import {Modifiers, Dathlete} from "../libraries/LibAppStorage.sol";
 import {IERC721} from "../../shared/interfaces/IERC721.sol";

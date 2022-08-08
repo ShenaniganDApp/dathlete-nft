@@ -4,13 +4,15 @@ import "hardhat-contract-sizer";
 import "solidity-coverage";
 import * as dotenv from "dotenv";
 import "@typechain/hardhat";
+import "@matterlabs/hardhat-zksync-deploy";
+import "@matterlabs/hardhat-zksync-solc";
 
 dotenv.config({ path: "./../../.env" });
 
 require("./tasks/verifyFacet.ts");
 // require("./tasks/deployUpgrade.ts");
 require("./tasks/generateDiamondABI.ts");
-// require("./tasks/generateDiamondABI_eth.ts");
+require("./tasks/generateDiamondABI_Zk.ts");
 require("./tasks/batchDeposit.ts");
 // require("./tasks/addItemTypes.ts");
 
@@ -20,23 +22,14 @@ require("./tasks/batchDeposit.ts");
 // Go to https://buidler.dev/config/ to learn more
 export default {
   networks: {
+    // To compile with zksolc, this must be the default network.
     hardhat: {
-      forking: {
-        url: process.env.XDAI_URL,
-        timeout: 120000000,
-        // blockNumber: 12552123
-        // blockNumber: 13024371
-      },
-      blockGasLimit: 20000000,
-      timeout: 120000,
-      gas: "auto",
+      zksync: true,
+      allowUnlimitedContractSize: true,
     },
+
     localhost: {
       url: "http://localhost:8545",
-    },
-    zksyncTestnet: {
-      url: "https://zksync2-testnet.zksync.dev",
-      timeout: 120000000,
     },
     // xdai: {
     //   url: process.env.XDAI_URL,
@@ -72,6 +65,23 @@ export default {
     //   gasPrice: 2100000000
     // }
   },
+  zksolc: {
+    version: "1.1.0",
+    compilerSource: "docker",
+    settings: {
+      optimizer: {
+        enabled: true,
+      },
+      experimental: {
+        dockerImage: "matterlabs/zksolc",
+      },
+    },
+  },
+  zkSyncDeploy: {
+    zkSyncNetwork: "https://zksync2-testnet.zksync.dev",
+    ethNetwork: "goerli", // Can also be the RPC URL of the network (e.g. `https://goerli.infura.io/v3/<API_KEY>`)
+  },
+
   gasReporter: {
     currency: "USD",
     gasPrice: 100,
@@ -84,25 +94,6 @@ export default {
   },
   // This is a sample solc configuration that specifies which version of solc to use
   solidity: {
-    compilers: [
-      {
-        version: "0.8.1",
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
-        },
-      },
-      {
-        version: "0.4.24",
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
-        },
-      },
-    ],
+    version: "0.8.15",
   },
 };

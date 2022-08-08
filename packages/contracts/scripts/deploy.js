@@ -77,7 +77,20 @@ async function main(scriptName) {
     daoTreasury = account;
     challengeManagers = [account]; // 'todo'
     mintAddress = account; // 'todo'
-  } else {
+  } else if (hre.network.name === "zksyncTestnet") {
+    initialSeasonSize = "1000";
+
+    // ZkSync prtcle token address
+    prtcleTokenContract = await ethers.getContractAt(
+      "Particle",
+      "0xeDaA788Ee96a0749a2De48738f5dF0AA88E99ab5"
+    );
+
+    dao = "todo"; // await accounts[1].getAddress()
+    daoTreasury = "todo";
+    rarityFarming = "todo"; // await accounts[2].getAddress()
+    pixelCraft = "todo"; // await accounts[3].getAddress() else {
+
     throw Error("No network settings for " + hre.network.name);
   }
 
@@ -149,7 +162,10 @@ async function main(scriptName) {
     prtcleAddress: "0xB5d592f85ab2D955c25720EbE6FF8D4d1E1Be300",
   };
 
-  fs.writeFileSync("./diamondABI/localAddresses.json", JSON.stringify(addresses));
+  fs.writeFileSync(
+    "./diamondABI/localAddresses.json",
+    JSON.stringify(addresses)
+  );
 
   tx = dathleteDiamond.deployTransaction;
   receipt = await tx.wait();

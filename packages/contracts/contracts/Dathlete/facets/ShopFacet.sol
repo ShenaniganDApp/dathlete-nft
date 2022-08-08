@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.1;
+pragma solidity ^0.8.15;
 
 import {Modifiers, AppStorage, ChallengeType, Season} from "../libraries/LibAppStorage.sol";
 import {LibDathlete} from "../libraries/LibDathlete.sol";

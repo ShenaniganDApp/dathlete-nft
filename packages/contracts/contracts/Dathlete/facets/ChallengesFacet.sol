@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.1;
+pragma solidity ^0.8.15;
 
 import {LibChallenges, ChallengeTypeIO} from "../libraries/LibChallenges.sol";
 import {LibAppStorage, Modifiers, Dathlete, ChallengeType} from "../libraries/LibAppStorage.sol";

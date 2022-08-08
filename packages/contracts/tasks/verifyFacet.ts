@@ -1,8 +1,7 @@
 import axios from "axios";
 import fs from "fs";
 import { task } from "hardhat/config";
-import { URLSearchParams } from "url"
-
+import { URLSearchParams } from "url";
 
 const addresses: string[] = [];
 
@@ -95,13 +94,13 @@ task(
     );
 
     sourceCode = sourceCode.replace(
-      "pragma solidity 0.8.1;",
+      "pragma solidity ^0.8.15;",
       "solidityindicator"
     );
     sourceCode = sourceCode.replace(/pragma solidity 0\.8\.1\;/g, "");
     sourceCode = sourceCode.replace(
       "solidityindicator",
-      "pragma solidity 0.8.1;"
+      "pragma solidity ^0.8.15;"
     );
 
     try {
