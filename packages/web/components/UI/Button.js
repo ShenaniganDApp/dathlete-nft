@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-const Button = ({ href, children, ...props }) => {
+const Button = ({ href, children, type, ...props }) => {
   return (
-    <StyledButton {...props} href={href}>
+    <StyledButton {...props} href={href} type={type}>
       <Text>{children}</Text>
     </StyledButton>
   );
@@ -10,7 +10,7 @@ const Button = ({ href, children, ...props }) => {
 
 export default Button;
 
-const StyledButton = styled.a`
+const StyledButton = styled.button`
   display: inline-block;
   background-color: #6284ff;
   padding: 1.2rem 2.8rem;
