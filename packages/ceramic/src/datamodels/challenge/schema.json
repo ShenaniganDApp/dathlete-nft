@@ -7,13 +7,16 @@
       "type": "string",
       "maxLength": 250
     },
-    "image": {
-      "$ref": "#/definitions/imageSources"
+    "story": {
+      "$ref": "#/definitions/videoSources"
+    },
+    "video": {
+      "$ref": "#/definitions/videoSources"
     },
     "description": {
       "type": "string",
       "maxLength": 420
-    } 
+    }
   },
   "definitions": {
     "IPFSUrl": {
@@ -25,7 +28,7 @@
       "type": "integer",
       "minimum": 1
     },
-    "imageMetadata": {
+    "videoMetadata": {
       "type": "object",
       "properties": {
         "src": {
@@ -43,20 +46,23 @@
         },
         "size": {
           "$ref": "#/definitions/positiveInteger"
+        },
+        "duration": {
+          "$ref": "#/definitions/positiveInteger"
         }
       },
-      "required": ["src", "mimeType", "width", "height"]
+      "required": ["src", "mimeType", "width", "height", "duration"]
     },
-    "imageSources": {
+    "videoSources": {
       "type": "object",
       "properties": {
         "original": {
-          "$ref": "#/definitions/imageMetadata"
+          "$ref": "#/definitions/videoMetadata"
         },
         "alternatives": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/imageMetadata"
+            "$ref": "#/definitions/videoMetadata"
           }
         }
       },

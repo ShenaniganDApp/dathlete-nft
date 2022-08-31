@@ -42,6 +42,7 @@
     "@ethersproject/experimental": "^5.4.0",
     "@ethersproject/hardware-wallets": "https://github.com/mudgen/ethers-ledger.git",
     "@matterlabs/hardhat-zksync-deploy": "^0.3.6",
+    "@poanet/solidity-flattener": "^3.0.8",
     "@types/chai": "^4.2.21",
     "@types/mocha": "^9.0.0",
     "axios": "^0.21.1",

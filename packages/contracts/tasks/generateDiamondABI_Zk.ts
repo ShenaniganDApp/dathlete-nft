@@ -2,8 +2,8 @@ const fs = require("fs");
 import { AbiCoder } from "@ethersproject/abi";
 import { task } from "hardhat/config";
 
-const basePath = "contracts/PART/facets/";
-const libraryBasePath = "contracts/PART/libraries/";
+const basePath = "contracts/Dathlete/facets/";
+const libraryBasePath = "contracts/Dathlete/libraries/";
 const sharedLibraryBasePath = "contracts/shared/libraries/";
 
 task(

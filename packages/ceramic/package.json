@@ -18,7 +18,7 @@
     "url": "git+https://github.com/ShenaniganDApp/dathlete-nft.git"
   },
   "scripts": {
-    "ceramic": "ceramic daemon",
+    "daemon": "ceramic daemon",
     "ceramic:publish": "node --experimental-json-modules src/publish.mjs",
     "ceramic:run": "node --experimental-json-modules src/run.mjs",
     "test": "echo \"Error: run tests from root\" && exit 1"

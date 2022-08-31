@@ -11,13 +11,14 @@ import { fromString } from 'uint8arrays';
 import ChallengeSchema from './datamodels/challenge/schema.json';
 import * as dotenv from 'dotenv';
 
-dotenv.config({ path: '../../../.env' });
+dotenv.config({ path: '../../.env' });
 
 const CERAMIC_URL = 'http://localhost:7007';
 const ETH_URL = 'http://localhost:8545';
 
 (async () => {
   const ceramic = new CeramicClient(CERAMIC_URL);
+
   const key = fromString(process.env.PK, 'base16');
   // Create and authenticate the DID
   const did = new DID({
@@ -25,7 +26,7 @@ const ETH_URL = 'http://localhost:8545';
     resolver: getResolver(),
   });
   await did.authenticate();
-  ceramic.did = did
+  ceramic.did = did;
 
   // Create a manager for the model
   const manager = new ModelManager(ceramic);
@@ -42,13 +43,15 @@ const ETH_URL = 'http://localhost:8545';
     schema: manager.getSchemaURL(challengeSchemaID),
   });
 
+  //@TODO: publish a test video to ipfs by convrting an mp4 to the hls format
+
   // Create a tile using the created schema ID
   await manager.createTile(
     'TheVoid',
     {
       title: 'TheVoid',
       description: 'TheVoid',
-      image: {
+      story: {
         alternatives: [],
         original: {
           src: 'ipfs://QmUzgZSJxcVakAho8stC9izdWjqctYNHYyqr7hSUtmC3z8',
@@ -56,6 +59,18 @@ const ETH_URL = 'http://localhost:8545';
           width: 369,
           mimeType: 'image/png',
           size: 23658,
+          duration: 1,
+        },
+      },
+      video: {
+        alternatives: [],
+        original: {
+          src: 'ipfs://QmUzgZSJxcVakAho8stC9izdWjqctYNHYyqr7hSUtmC3z8',
+          height: 369,
+          width: 369,
+          mimeType: 'image/png',
+          size: 23658,
+          duration: 1,
         },
       },
     },
@@ -67,5 +82,4 @@ const ETH_URL = 'http://localhost:8545';
 
   // Write published model to JSON file
   await writeFile('src/datamodels/challenge/model.json', JSON.stringify(model));
-
 })();

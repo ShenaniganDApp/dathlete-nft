@@ -1,9 +1,9 @@
 import { useConnection } from '@self.id/framework';
 import { Button } from '/components/UI';
 
-import { useLogin, useLogout} from '/hooks/useLogin';
+import { useLogin, useLogout } from '/hooks/useLogin';
 
-const style = { color: 'black', width: 200 };
+const style = { color: 'black', width: 200, backgroundColor: 'white' };
 
 function SelfIdButton() {
   const [connection] = useConnection();
@@ -24,7 +24,7 @@ function SelfIdButton() {
     </button>
   ) : (
     <button onClick={() => login()} style={style}>
-      Connect
+      Connect SelfId
     </button>
   );
 }

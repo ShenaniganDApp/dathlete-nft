@@ -33,7 +33,7 @@ const ChallengeTypeScreen = (props) => {
           const quantity = utils.parseEther(maxQuantity).toString();
           const total = utils.parseEther(totalQuantity).toString();
 
-          await props.addChallengeTypes([
+          await props.onAddChallengeTypes([
             {
               name,
               description,

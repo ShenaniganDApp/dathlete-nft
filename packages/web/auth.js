@@ -1,7 +1,7 @@
 const ethereumConnectors = [{ key: 'injected' }];
 
 const walletConnectChainId = process.env.NEXT_PUBLIC_WALLETCONNECT_CHAIN_ID;
-const walletConnectRpcUrl = process.env.XDAI_URL;
+const walletConnectRpcUrl = process.env.ZKSYNC_RPC_URL;
 if (
   typeof walletConnectChainId === 'string' &&
   typeof walletConnectRpcUrl === 'string'

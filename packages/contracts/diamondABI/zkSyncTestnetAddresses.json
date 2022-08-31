@@ -1,0 +1,9 @@
+{
+  "diamondAddress": "0xbd528692046995C617C5c9BD928C2CdDcfF646c7",
+  "dathleteFacetAddress": "0x61C5eE25c52594A376aA5353206A2D85e1034921",
+  "challengesFacetAddress": "0x1E398277f13A023d1D4f58eE2156dC5c4a75abEE",
+  "challengeTransferFacet": "0x4a282D525889b38869235FaC774F09E6Bf0EA25c",
+  "daoFacetAddress": "0x39a9C41955D698421e9511E340C001842F2dE8aA",
+  "shopFacetAddress": "0xa4F260bd5E4b5d5162bacbB0E1Fc901E496c6063",
+  "prtcleAddress": "0xcd6eAF00b0fBf76Aa621c97bfE2Abb046B26F142"
+}
