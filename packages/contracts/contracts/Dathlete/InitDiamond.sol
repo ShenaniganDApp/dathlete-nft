@@ -17,6 +17,7 @@ contract InitDiamond {
         address prtcleContract;
         string name;
         string symbol;
+        address[] allowedTokens;
     }
 
     function init(Args memory _args) external {
@@ -32,6 +33,11 @@ contract InitDiamond {
         s.daoTreasury = _args.daoTreasury;
         s.prtcleContract = _args.prtcleContract;
         s.challengesBaseUri = "ipfs://f0{id}";
+
+        for (uint256 i; i < _args.allowedTokens.length; i++) {
+            address token = _args.allowedTokens[i];
+            s.allowedTokens[token] = true;
+        }
 
         s.name = _args.name;
         s.symbol = _args.symbol;

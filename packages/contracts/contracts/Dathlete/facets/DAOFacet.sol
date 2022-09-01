@@ -16,6 +16,7 @@ contract DAOFacet is Modifiers {
     event ChallengeManagerRemoved(address indexed challengeManager_);
     event UpdateChallengePrice(uint256 _challengeId, uint256 _priceInWei);
     event AddAllowedTokens(address[] _tokens);
+    event SetChallengeResolver(ChallengeType _challenge, address _resolver);
 
     /***********************************|
    |             Write Functions        |
@@ -174,5 +175,32 @@ contract DAOFacet is Modifiers {
             s.allowedTokens[token] = true;
         }
         emit AddAllowedTokens(_tokens);
+    }
+
+    function setChallengeResolver(address _resolver, uint256 _challengeId) public onlyOwnerOrChallengeManager {
+        ChallengeType storage challenge = s.challengeTypes[_challengeId];
+        challenge.resolver = _resolver;
+    }
+
+    function startChallenge(uint256 _challengeId) public onlyOwnerOrChallengeManager {
+        ChallengeType storage challenge = s.challengeTypes[_challengeId];
+        require(challenge.status == 0, "DAOFacet: Challenge is already active");
+        challenge.status = 1;
+    }
+
+    function resolveChallenge(uint256 _challengeId, uint8 result) external onlyChallengeResolver(_challengeId) {
+        ChallengeType storage challenge = s.challengeTypes[_challengeId];
+        require(challenge.status == 1, "DAOFacet: Challenge is not active");
+        require(challenge.result == 0, "DAOFacet: Challenge already has a result");
+        require(challenge.result < 3, "DAOFacet: Invalid result was given must be either Believer (1) or Doubter (2)");
+        challenge.status = 2;
+        challenge.result = result;
+    }
+
+    function cancelChallenge(uint256 _challengeId) external onlyChallengeManagerOrChallengeResolver(_challengeId) {
+        ChallengeType storage challenge = s.challengeTypes[_challengeId];
+        require(challenge.status < 2, "DAOFacet: Challenge has already been resolved");
+        require(challenge.result == 0, "DAOFacet: Challenge already has a result");
+        challenge.status = 3;
     }
 }

@@ -21,7 +21,7 @@ struct ChallengeType {
     bool canBeTransferred;
     string believerOption;
     string doubterOption;
-    uint8 status; //(0) Open | (1) Active | (2) Completed | (3) Cancelled
+    uint8 status; //(0) Open | (1) Active | (2) Resolved | (3) Cancelled
     uint8 result; // (0) No result | (1) Believers | (2) Doubters
     address resolver;
     uint32 dathleteId;
@@ -123,6 +123,22 @@ contract Modifiers {
         require(
             sender == LibDiamond.contractOwner() || s.challengeManagers[sender] == true,
             "LibAppStorage: only an Owner or ChallengeManager can call this function"
+        );
+        _;
+    }
+
+    modifier onlyChallengeResolver(uint256 _challengeId) {
+        address sender = msg.sender;
+        ChallengeType storage challenge = s.challengeTypes[_challengeId];
+        require(sender == challenge.resolver, "LibAppStorage: only a ChallengeResolver can call this function");
+        _;
+    }
+    modifier onlyChallengeManagerOrChallengeResolver(uint256 _challengeId) {
+        address sender = msg.sender;
+        ChallengeType storage challenge = s.challengeTypes[_challengeId];
+        require(
+            sender == challenge.resolver || s.challengeManagers[sender] == true,
+            "LibAppStorage: only a ChallengeResolver can call this function"
         );
         _;
     }
