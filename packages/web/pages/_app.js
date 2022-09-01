@@ -152,11 +152,18 @@ function MyApp({ Component, pageProps }) {
               detectRetina: true,
             }}
           />
-          <div style={{ position: 'relative', zIndex: 2 }}>
-            <Header>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-around',
+              position: 'relative',
+              zIndex: 2,
+            }}
+          >
+            <div className=" py-2 h-full flex-start hidden md:visible md:flex">
               <ConnectButton />
               {/* <SelfIdButton /> */}
-            </Header>
+            </div>
 
             <Component {...pageProps} />
           </div>
@@ -171,8 +178,8 @@ export default MyApp;
 const Header = styled.div`
   display: flex;
   padding: 2rem 0;
-  width: 100%;
-  justify-content: flex-end;
+  height: 100%;
+  justify-content: flex-start;
 `;
 
 const ButtonFrame = styled.button`

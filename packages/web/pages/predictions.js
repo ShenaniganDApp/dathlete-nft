@@ -22,6 +22,7 @@ const Predictions = () => {
       const videoElement = playbackRef.current;
 
       if (!videoElement) return;
+      console.log('videoElement: ', videoElement);
 
       const player = (playerRef.current = videojs(
         videoElement,
@@ -40,25 +41,20 @@ const Predictions = () => {
       // return () => {
       //   videoElement.removeEventListener('error', handleClick);
       // };
-      return () => {
-        if (player) {
-          console.log('dispose');
-          player.dispose();
-        }
-      };
     }
   }, [playbackRef]);
 
-  useEffect(() => {
-    const player = playerRef.current;
+  // dispose fucks with hot reload
+  // useEffect(() => {
+  //   const player = playerRef.current;
 
-    return () => {
-      if (player) {
-        player.dispose();
-        playerRef.current = null;
-      }
-    };
-  }, [playbackRef]);
+  //   return () => {
+  //     if (player) {
+  //       player.dispose();
+  //       playerRef.current = null;
+  //     }
+  //   };
+  // }, [playbackRef]);
 
   const onReady = (player) => {
     playbackRef.current = player;
@@ -74,24 +70,36 @@ const Predictions = () => {
   };
 
   return (
-    <div>
-      <div>Title</div>
-      <video
-        ref={playbackRef}
-        className="video-js vjs-big-play-centered"
-        width="100%"
-        height="auto"
-        controls={true}
-        autoPlay={true}
-      >
-        <source
-          src="https://livepeercdn.com/hls/8197mqr3gsrpeq37/index.m3u8"
-          type="application/x-mpegURL"
-        />
-      </video>
-      <div className="flex">
-        <Button>Yes</Button>
-        <Button>No</Button>
+    <div className="h-screen flex flex-col justify-around items-center overflow-hidden gap-10">
+      <div className="h-[90vh] flex flex-col justify-around rounded-3xl border-2 border-white:55% p-4 backdrop-blur-sm">
+        <div className="w-full flex justify-center items-center text-5xl overflow-x-auto">
+          <h1>Titleyaksuuskuksykaruskra tqsarekaeskea</h1>
+        </div>
+        <div className="flex justify-center items-center max-w-6xl flex-2 bg-black aspect-video">
+          <video
+            ref={playbackRef}
+            className="video-js"
+            controls={true}
+            autoPlay={false}
+          >
+            <source
+              src="https://livepeercdn.com/hls/8197mqr3gsrpeq37/index.m3u8"
+              type="application/x-mpegURL"
+            />
+          </video>
+        </div>
+        <div className="flex justify-around items-center">
+          <Button>Believe</Button>
+          <Button>Doubt</Button>
+        </div>
+      </div>
+      <div className="rounded-3xl border-2 border-white:55% p-4 backdrop-blur-sm opacity-25 ">
+        <div className="w-full flex justify-center items-center text-5xl overflow-x-auto">
+          <h1>No Content Available</h1>
+        </div>
+        <div className="flex justify-center items-center max-w-6xl flex-2 bg-black aspect-video">
+          <img src="https://static.wikia.nocookie.net/supermarioglitchy4/images/f/f3/Big_chungus.png/revision/latest/scale-to-width-down/700?cb=20200511041102" />
+        </div>
       </div>
     </div>
   );
