@@ -13,12 +13,27 @@ struct Dathlete {
 struct ChallengeType {
     string name;
     string description;
-    uint256 maxQuantity; //Total number that can be minted of this item.
-    uint256 totalQuantity; //The total quantity of this item minted so far
+    uint256 maxQuantity; //Total number that can be minted of this challenge.
+    uint256 totalQuantity; //The total quantity of this challenge minted so far
     uint32 id;
     bool canPurchaseWithPrtcle;
-    uint256 prtclePrice; //How much PRTCLE this item costs
+    uint256 prtclePrice; //How much PRTCLE this challenge costs
     bool canBeTransferred;
+    string believerOption;
+    string doubterOption;
+    uint8 status; //(0) Open | (1) Active | (2) Completed | (3) Cancelled
+    uint8 result; // (0) No result | (1) Believers | (2) Doubters
+    address resolver;
+    uint32 dathleteId;
+}
+
+struct Prediction {
+    uint32 id;
+    address owner;
+    uint32 challengeId;
+    bool isBeliever;
+    address token;
+    uint256 amount;
 }
 
 struct Season {
@@ -45,6 +60,11 @@ struct AppStorage {
     mapping(uint256 => uint256) tokenIdIndexes;
     mapping(address => mapping(address => bool)) operators;
     mapping(uint256 => address) approved;
+    Prediction[] predictions;
+    mapping(uint32 => uint32[]) challengePredictions;
+    mapping(address => mapping(uint256 => uint256)) ownerPredictionIdIndexes;
+    mapping(uint32 => uint256) predictionBelieverBalance;
+    mapping(uint32 => mapping(address => uint256)) predictionDoubterBalance;
     uint32 tokenIdCounter;
     uint16 currentSeasonId;
     string challengesBaseUri;
@@ -53,6 +73,7 @@ struct AppStorage {
     address prtcleContract;
     address dao;
     address daoTreasury;
+    mapping(address => bool) allowedTokens;
     mapping(address => bool) challengeManagers;
 }
 

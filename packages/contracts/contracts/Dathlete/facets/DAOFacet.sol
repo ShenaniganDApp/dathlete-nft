@@ -4,6 +4,7 @@ pragma solidity ^0.8.15;
 import {Modifiers, ChallengeType} from "../libraries/LibAppStorage.sol";
 import {LibERC1155} from "../../shared/libraries/LibERC1155.sol";
 import {LibChallenges} from "../libraries/LibChallenges.sol";
+import {LibERC1155} from "../../shared/libraries/LibERC1155.sol";
 
 contract DAOFacet is Modifiers {
     event DaoTransferred(address indexed previousDao, address indexed newDao);
@@ -14,6 +15,7 @@ contract DAOFacet is Modifiers {
     event ChallengeManagerAdded(address indexed newChallengeManager_);
     event ChallengeManagerRemoved(address indexed challengeManager_);
     event UpdateChallengePrice(uint256 _challengeId, uint256 _priceInWei);
+    event AddAllowedTokens(address[] _tokens);
 
     /***********************************|
    |             Write Functions        |
@@ -106,7 +108,7 @@ contract DAOFacet is Modifiers {
         emit CreateSeason(seasonId_, _payload._seasonMaxSize, _payload._dathletePrice);
     }
 
-    ///@notice Allow an challenge manager to mint new ERC1155 challenges
+    ///@notice Allow a challenge manager to mint new ERC1155 challenges
     ///@dev Will throw if a particular challenge current supply has reached its maximum supply
     ///@param _to The address to mint the challenges to
     ///@param _challengeIds An array containing the identifiers of the challenges to mint
@@ -163,5 +165,14 @@ contract DAOFacet is Modifiers {
             challenge.prtclePrice = _newPrices[i];
             emit UpdateChallengePrice(challengeId, _newPrices[i]);
         }
+    }
+
+    function addAllowedTokens(address[] calldata _tokens) external onlyOwnerOrChallengeManager {
+        require(_tokens.length > 0, "DAOFacet: You must add at least one allowed token");
+        for (uint256 i; i < _tokens.length; i++) {
+            address token = _tokens[i];
+            s.allowedTokens[token] = true;
+        }
+        emit AddAllowedTokens(_tokens);
     }
 }
